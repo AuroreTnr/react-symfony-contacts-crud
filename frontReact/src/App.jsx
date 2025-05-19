@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Formulaire from "./Formulaire.jsx";
 import BarRecherche from "./BarRecherche.jsx";
-import './App.css';
+import { AdminGuesser } from '@api-platform/admin';
+
+// https://api-platform.com/docs/admin/components/#adminguesser
 
 function App() {
+
 const [contacts, setContacts] = useState([]);
 const [contactToEdit, setContactToEdit] = useState(null);
 const [messageDelete, setMessageDelete] = useState("");
