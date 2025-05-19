@@ -57,8 +57,8 @@ npm run dev
 
 ### 🧩 Interface admin
 
-Ce projet ne repose pas sur une bibliothèque comme React Admin. L’interface d’administration (CRUD) a été construite à la main en React pour une meilleure compréhension du fonctionnement des appels API, des formulaires et de la gestion d’état.
+Ce projet n' utilise pas la bibliothèque React Admin. L’interface d’administration (CRUD) a été construite à la main en React pour une meilleure compréhension du fonctionnement des appels API, des formulaires et de la gestion d’état.
 
 
 
-# react-symfony-contacts-crud
+
