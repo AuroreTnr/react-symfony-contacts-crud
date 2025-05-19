@@ -1,0 +1,13 @@
+api_platform:
+    formats:
+        jsonld: ["application/ld+json"]
+        json: ["application/json"]
+    patch_formats:
+        json: ["application/merge-patch+json"]
+        jsonapi: ["application/vnd.api+json"]
+    title: Hello API Platform
+    version: 1.0.0
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
