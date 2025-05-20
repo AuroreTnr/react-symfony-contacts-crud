@@ -49,16 +49,16 @@ npm run dev
 
 ## ➡️ Côté API (Symfony), les éléments suivants sont déjà mis en place :
 
-- ✅ Normalisation et dénormalisation configurées avec des groupes (`read:listContact`, `read:itemContact`, `write:itemContact`)
-- 🔍 Un filtre de recherche sur le nom (`nom`) via `SearchFilter`
-- 📄 Pagination activée avec 5 éléments par page (`paginationItemsPerPage: 5`)
+- Normalisation et dénormalisation configurées avec des groupes (`read:listContact`, `read:itemContact`, `write:itemContact`)
+- Un filtre de recherche sur le nom (`nom`) via `SearchFilter`
+- Pagination activée avec 5 éléments par page (`paginationItemsPerPage: 5`)
 
 
-## ➡️ Côté Front-End (React), **ce qui reste à faire** :
+## 🚧 Côté Front-End (React), **ce qui reste à faire** :
 
-- 🔄 **Pagination** : La pagination n'est pas encore en place. Il faut l'ajouter pour charger les contacts par pages.
+- **Pagination** : La pagination n'est pas encore en place. Il faut l'ajouter pour charger les contacts par pages.
 
-- 🔍 **Recherche** : La recherche doit maintenant se faire via l'API, et non plus sur le front-end. Il faut ajouter un champ pour filtrer les contacts par nom ou prénom.
+- **Recherche** : La recherche doit maintenant se faire via l'API, et non plus sur le front-end. Il faut ajouter un champ pour filtrer les contacts par nom ou prénom.
 
 
 
