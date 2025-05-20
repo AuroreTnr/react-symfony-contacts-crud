@@ -47,7 +47,7 @@ npm run dev
 * react-front/ : projet React
 
 
-➡️ **Côté API (Symfony), les éléments suivants sont déjà mis en place** :
+## ➡️ Côté API (Symfony), les éléments suivants sont déjà mis en place :
 
 - ✅ Normalisation et dénormalisation configurées avec des groupes (`read:listContact`, `read:itemContact`, `write:itemContact`)
 - 🔍 Un filtre de recherche sur le nom (`name`) via `SearchFilter`
