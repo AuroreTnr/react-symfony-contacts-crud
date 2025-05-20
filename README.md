@@ -51,7 +51,7 @@ npm run dev
 
 - ✅ Normalisation et dénormalisation configurées avec des groupes (`read:listContact`, `read:itemContact`, `write:itemContact`)
 - 🔍 Un filtre de recherche sur le nom (`name`) via `SearchFilter`
-- 📄 Pagination activée avec 2 éléments par page (`paginationItemsPerPage: 5`)
+- 📄 Pagination activée avec 5 éléments par page (`paginationItemsPerPage: 5`)
 
 
 
