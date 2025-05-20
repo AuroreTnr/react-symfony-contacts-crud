@@ -13,36 +13,47 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+
+// CORE
+// https://api-platform.com/docs/core/serialization/
+// https://api-platform.com/docs/core/filters/
+// https://api-platform.com/docs/core/pagination/
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ApiResource(
     operations: [
-        new GetCollection(),
-        new Get(),
-        new Post(),
-        new Patch(),
-        new Put(),
+        new GetCollection(normalizationContext: ['groups' => 'read:listContact']),
+        new Get(normalizationContext: ['groups' => 'read:itemContact']),
+        new Post(denormalizationContext: ['groups' => 'write:itemContact']),
+        new Patch(denormalizationContext: ['groups' => 'write:itemContact']),
+        new Put(denormalizationContext: ['groups' => 'write:itemContact']),
         new Delete()
-    ]
+    ],
+    paginationItemsPerPage: 10
 )]
+#[ApiFilter(SearchFilter::class, properties: ['nom' => 'partial', 'prenom' => 'partial'])]
 class Contact
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:listContact', 'read:itemContact'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2)]
     #[Assert\Regex(pattern: "/^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ' -]*$/")]
+    #[Groups(['read:listContact', 'read:itemContact', 'write:itemContact'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2)]
     #[Assert\Regex(pattern: "/^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ' -]*$/")]
+    #[Groups(['read:listContact', 'read:itemContact', 'write:itemContact'])]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
@@ -50,6 +61,7 @@ class Contact
     #[Assert\Email(
         mode: 'strict'
     )]
+    #[Groups(['read:listContact', 'read:itemContact', 'write:itemContact'])]
     private ?string $email = null;
 
     public function getId(): ?int

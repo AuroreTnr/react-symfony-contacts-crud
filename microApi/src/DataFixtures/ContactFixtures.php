@@ -10,10 +10,11 @@ class ContactFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $noms = ['Durand', 'Martin', 'Bernard', 'Dubois', 'Thomas'];
-        $prenoms = ['Alice', 'Jean', 'Claire', 'Luc', 'Emma'];
+        $noms = ['Durand', 'Martin', 'Bernard', 'Dubois', 'Thomas', 'Lemoine', 'Petit', 'Roux', 'Blanc', 'Lemoine'];
+        $prenoms = ['Alice', 'Jean', 'Claire', 'Luc', 'Emma', 'Sophie', 'Pierre', 'Marie', 'Paul', 'Julie'];
 
-        for ($i = 0; $i < 5; $i++) {
+
+        for ($i = 0; $i < 10; $i++) {
             $contact = new Contact();
             $contact->setNom($noms[$i]);
             $contact->setPrenom($prenoms[$i]);
