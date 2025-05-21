@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 
-export default function Formulaire({ onAjoutContact, contactToEdit, clearEdit }) {
+export default function Formulaire({ actualiserListContact, contactToEdit, clearEdit }) {
+    // --- actualisationListContact ( = fetchContacts) : actualise l affichage des contacts apres modification et insertion
+    // --- contactToEdit ( = contactToEdit) : donne la ligne du contact a modifier
+    // --- clearEdit ( = () => setContactToEdit(null)) : met contactToEdit à null donc le ternaire du fetch put est false et execute le post.
+
+        const method = contactToEdit ? "PUT" : "POST";
+
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
 
+    // quand on clique sur modifier useEffect s' execute, il prerempli le formulaire
     useEffect(() => {
         if (contactToEdit) {
         setNom(contactToEdit.nom);
@@ -17,10 +24,11 @@ export default function Formulaire({ onAjoutContact, contactToEdit, clearEdit })
     }, [contactToEdit]);
 
     
-    // ---
+    // --- avant d envoyer le code on valide côté client(aussi côté back) puis on effectue la requete
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // --- Validation client
         const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
         const nomPrenomRegex = /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ' -]*$/;
 
@@ -47,7 +55,9 @@ export default function Formulaire({ onAjoutContact, contactToEdit, clearEdit })
 
         
 
-        // ---
+        // --- Requete
+
+        // si contactToEdit est true alors je fetch ici le PUT "https://127.0.0.1:8000/api/contacts/${contactToEdit.id}" sinon je fetch ici le POST "https://127.0.0.1:8000/api/contacts"
         const url = contactToEdit
         ? `https://127.0.0.1:8000/api/contacts/${contactToEdit.id}`
         : "https://127.0.0.1:8000/api/contacts";
@@ -71,7 +81,7 @@ export default function Formulaire({ onAjoutContact, contactToEdit, clearEdit })
             setNom("");
             setPrenom("");
             setEmail("");
-            if (onAjoutContact) onAjoutContact();
+            if (actualiserListContact) actualiserListContact();
             if (clearEdit) clearEdit();
         })
         .catch(error => {
@@ -80,11 +90,11 @@ export default function Formulaire({ onAjoutContact, contactToEdit, clearEdit })
         });
   };
 
-    // ---
+    // --- formulaire, quand on submit handlesubmit se declenche
     return (
         <div className="mt-5">
         <h2>{contactToEdit ? "Modifier un contact" : "Ajouter un contact"}</h2>
-        {message && <div className="alert alert-info">{message}</div>}
+        {message && <div className="alert alert-info">{message}setContactToEdit</div>}
         <form onSubmit={handleSubmit} className="mb-5">
             <div className="mb-3">
                 

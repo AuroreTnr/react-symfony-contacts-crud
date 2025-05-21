@@ -31,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Put(denormalizationContext: ['groups' => 'write:itemContact']),
         new Delete()
     ],
-    paginationItemsPerPage: 10
+    // paginationItemsPerPage: 10
 )]
 #[ApiFilter(SearchFilter::class, properties: ['nom' => 'partial', 'prenom' => 'partial'])]
 class Contact

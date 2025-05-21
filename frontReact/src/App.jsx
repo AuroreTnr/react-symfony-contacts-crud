@@ -10,6 +10,7 @@ const [messageDelete, setMessageDelete] = useState("");
 const [searchQuery, setSearchQuery] = useState("");
 
 
+// --- On set le state de contactToEdit afin de récuperer la ligne du contact à éditer
   const handleEdit = (contact) => {
   setContactToEdit(contact);
 };
@@ -18,9 +19,15 @@ const [searchQuery, setSearchQuery] = useState("");
   // Afficher les contacts depuis l'API
   const fetchContacts = () => {
     fetch("https://127.0.0.1:8000/api/contacts")
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) throw new Error("Erreur réseau");
+        return response.json();
+      })
       .then(data => setContacts(data["member"]))
-      .catch(error => console.error("Erreur fetch contacts:", error));
+      .catch(error => {
+        setMessageDelete("Impossible de charger les contacts. Veuillez réessayer")
+        console.error("Erreur fetch contacts:", error)
+      });
   };
 
   useEffect(() => {
@@ -35,28 +42,31 @@ const [searchQuery, setSearchQuery] = useState("");
   const handleDelete = (id) => {
   if (window.confirm("Voulez-vous vraiment supprimer ce contact ?")) {
     fetch(`https://127.0.0.1:8000/api/contacts/${id}`, {
-      method: "DELETE",
+      method: "DELETE"
     })
-    .then((res) => {
-      if (!res.ok) throw new Error("Erreur lors de la suppression");
+    .then(response => {
+      if (!response.ok) throw new Error("Erreur lors de la suppression");
       fetchContacts();
       setMessageDelete("Contact supprimé avec succès !");
       setTimeout(() => setMessageDelete(""), 3000);
 
     })
-    .catch((err) => {
-      console.error("Erreur suppression :", err);
+    .catch((error) => {
+      console.error("Erreur suppression :", error);
+      setMessageDelete("Une erreur est survenue lors de la suppression du contact. Veuillez réessayer.");
+      setTimeout(() => setMessageDelete(""), 3000);
     });
   }
 };
 
 // ---
 
-// filtre contact
+// filtre contact ( filtre sur le client ) parcours tous les contacts(prenom, nom) et compare avec la recherche utilisateur
 const filtreContact = contacts.filter(contact =>
-  (`${contact.prenom} ${contact.nom}`.toLowerCase().includes(searchQuery.toLowerCase()))
+  (`${contact.nom} ${contact.prenom} `.toLowerCase().includes(searchQuery.toLowerCase()))
 );
 
+// --- On gere le contenu de content qui sera different selon les conditions
 let content;
 
   if (contacts?.length > 0){
@@ -72,6 +82,7 @@ let content;
           </tr>
         </thead>
         <tbody>
+          {/* ici affiche selon filterContact car on à fait une bar de recherche */}
           {filtreContact.map(contact => (
             <tr key={contact.id}>
               <td>{contact.nom}</td>
@@ -106,16 +117,16 @@ let content;
       {messageDelete && <div className="alert alert-info">{messageDelete}</div>}
 
 
+      {/* ici on passe au composant BarRecherche les props(le state searchQuery, et  setSearchQuery)*/}
       <BarRecherche value={searchQuery} onChange={setSearchQuery} />
 
 
       {content}
       
       < Formulaire 
-        onAjoutContact={fetchContacts}
+        actualiserListContact={fetchContacts}
         contactToEdit={contactToEdit}
-        clearEdit={()=> setContactToEdit(null)
-        }
+        clearEdit={()=> setContactToEdit(null)}
       />
       
 
